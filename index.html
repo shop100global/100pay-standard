@@ -44,7 +44,19 @@
                   class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                   placeholder="Email Address">
               </div>
-
+              <div class="flex flex-col">
+                <select id="purpose" name="country" autocomplete="country"
+                  class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <option>What are you Giving For?</option>
+                  <option>Offering</option>
+                  <option>Tithe</option>
+                  <option>Healing School</option>
+                  <option>Rhapsody of Realities</option>
+                  <option>Campus Ministry</option>
+                  <option>Building Project</option>
+                  <option>Special seed</option>
+                </select>
+              </div>
 
               <div class="flex flex-col">
 
@@ -307,19 +319,7 @@
                 </select>
               </div>
 
-              <div class="flex flex-col">
-                <select id="purpose" name="country" autocomplete="country"
-                  class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                  <option>What are you Giving For?</option>
-                  <option>Offering</option>
-                  <option>Tithe</option>
-                  <option>Healing School</option>
-                  <option>Rhapsody of Realities</option>
-                  <option>Campus Ministry</option>
-                  <option>Building Project</option>
-                  <option>Special seed</option>
-                </select>
-              </div>
+
 
               <div class="flex flex-col">
 
@@ -451,21 +451,21 @@
     var raw = {
       ref_id: (new Date().getTime() * 2).toString(),
       customer: {
-        user_id: document.getElementById('phone'),
-        name: document.getElementById('name'),
-        phone: document.getElementById('phone'),
-        email: document.getElementById('email')
+        user_id: document.getElementById('phone').value,
+        name: document.getElementById('name').value,
+        phone: document.getElementById('phone').value,
+        email: document.getElementById('email').value
       },
       billing: {
         description: "PARTNERSHIP WITH RHAPSODY",
-        amount: document.getElementById('amount'),
-        country: document.getElementById('country'),
-        currency: document.getElementById('currency'),
+        amount: document.getElementById('amount').value,
+        country: document.getElementById('country').value,
+        currency: document.getElementById('currency').value,
         vat: "0",
         pricing_type: "fixed_price"
       },
       metadata: {
-        purpose: document.getElementById('purpose')
+        purpose: document.getElementById('purpose').value
       },
       call_back_url: "https://give.cephz1.online/"
     };
@@ -473,16 +473,20 @@
     var requestOptions = {
       method: 'POST',
       headers: myHeaders,
-      body: raw,
+      body: JSON.stringify(raw),
       redirect: 'follow'
     };
 
     fetch("https://api.shop100.co/api/v1/pay/charge", requestOptions)
-      .then(response => response.text())
-      .then(result => {
-        window.location.href = "https://pay.shop100.co/pay/" + result.chargeId;
-        console.log(result)
+      .then((resp) => resp.json())
+      .then(function (data) {
+        let charge = data;
+        console.log(charge)
+        return window.location.href = "https://pay.shop100.co/pay/" + charge.chargeId
       })
-      .catch(error => console.log('error', error));
+      .catch(function (error) {
+        console.log(error);
+      });
+
   }
 </script>

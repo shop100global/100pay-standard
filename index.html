@@ -8,7 +8,7 @@
   <link href="https://unpkg.com/tailwindcss@2.0.2/dist/tailwind.min.css" rel="stylesheet">
   <title>Christ Embassy Port Harcourt Zone1 Payment Gateway</title>
   <style>
-    /* @import url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css') */
+    @import url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css')
   </style>
 </head>
 
@@ -559,7 +559,7 @@
           email: document.getElementById('email').value
         },
         billing: {
-          description: "PARTNERSHIP WITH RHAPSODY",
+          description: document.getElementById('purpose').value,
           amount: document.getElementById('amount').value,
           country: document.getElementById('country').value,
           currency: document.getElementById('currency').value,
